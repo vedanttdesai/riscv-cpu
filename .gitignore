@@ -1,1 +1,5 @@
+# Verilator build output
 obj_dir/
+V*
+*.o
+*.d
