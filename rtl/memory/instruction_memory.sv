@@ -1,41 +1,44 @@
 `timescale 1ns/1ps
 
 module instruction_memory (
-
     input  logic [31:0] address,
     output logic [31:0] instruction
-
 );
 
-    // 256 words of instruction memory
-    logic [31:0] memory [0:255];
+logic [31:0] memory [0:255];
 
-    // Loop variable
-    integer i;
+integer i;
 
-    // Read instruction
-    assign instruction = memory[address[9:2]];
+initial begin
 
-    // Initialize instruction memory
-    initial begin
+    //=====================================================
+    // Branch Test Program
+    //=====================================================
 
-        // ADDI x1, x0, 10
-        memory[0] = 32'h00A00093;
+    // addi x1, x0, 5
+    memory[0] = 32'h00500093;
 
-        // ADDI x2, x0, 20
-        memory[1] = 32'h01400113;
+    // addi x2, x0, 5
+    memory[1] = 32'h00500113;
 
-        // ADD x3, x1, x2
-        memory[2] = 32'h002081B3;
+    // beq x1, x2, +8
+    // If equal, skip next instruction
+    memory[2] = 32'h00208463;
 
-        // SW x3, 0(x0)
-        memory[3] = 32'h00302023;
+    // addi x3, x0, 99
+    // SHOULD BE SKIPPED
+    memory[3] = 32'h06300193;
 
-        // Fill remaining memory with NOP
-        for (i = 4; i < 256; i = i + 1) begin
-            memory[i] = 32'h00000013;
-        end
+    // addi x3, x0, 42
+    // SHOULD EXECUTE
+    memory[4] = 32'h02A00193;
 
-    end
+    // Fill remaining memory with NOPs
+    for (i = 5; i < 256; i = i + 1)
+        memory[i] = 32'h00000013;
+
+end
+
+assign instruction = memory[address[9:2]];
 
 endmodule

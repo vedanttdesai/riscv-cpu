@@ -11,8 +11,9 @@ module cpu_top (
 
     logic [31:0] pc;
     logic [31:0] next_pc;
+    logic [31:0] branch_target;
 
-    assign next_pc = pc + 32'd4;
+    assign branch_target = pc + immediate;
 
     program_counter pc_inst (
         .clk(clk),
@@ -63,9 +64,17 @@ module cpu_top (
 
     logic [31:0] rd1;
     logic [31:0] rd2;
-    logic [31:0] write_data;
 
-    assign write_data = alu_result;
+    logic [31:0] alu_result;
+    logic [31:0] memory_read_data;
+    logic [31:0] write_back_data;
+
+    logic zero;
+    logic take_branch;
+
+    assign write_back_data =
+        (result_src == 2'b01) ? memory_read_data :
+                                alu_result;
 
     register_file rf (
         .clk(clk),
@@ -73,7 +82,7 @@ module cpu_top (
         .rs1(instruction[19:15]),
         .rs2(instruction[24:20]),
         .rd(instruction[11:7]),
-        .wd(write_data),
+        .wd(write_back_data),
         .rd1(rd1),
         .rd2(rd2)
     );
@@ -114,13 +123,38 @@ module cpu_top (
     // ALU
     //=========================================================
 
-    logic [31:0] alu_result;
-
     alu alu_inst (
         .a(rd1),
         .b(operand_b),
         .alu_ctrl(alu_control_signal),
-        .result(alu_result)
+        .result(alu_result),
+        .zero(zero)
     );
+
+    //=========================================================
+    // Data Memory
+    //=========================================================
+
+    data_memory dmem (
+        .clk(clk),
+        .mem_read(mem_read),
+        .mem_write(mem_write),
+        .address(alu_result),
+        .write_data(rd2),
+        .read_data(memory_read_data)
+    );
+
+    //=========================================================
+    // Branch Logic
+    //=========================================================
+
+    assign take_branch = branch && zero;
+
+    //=========================================================
+    // Next PC Logic
+    //=========================================================
+
+    assign next_pc = (take_branch) ? branch_target
+                                   : (pc + 32'd4);
 
 endmodule
