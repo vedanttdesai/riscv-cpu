@@ -2,62 +2,55 @@
 
 module cpu_top_tb;
 
-    logic clk;
-    logic reset;
+logic clk;
+logic rst;
 
-    // ============================
-    // Instantiate CPU
-    // ============================
-    cpu_top dut (
+cpu_top dut (
+    .clk(clk),
+    .rst(rst)
+);
 
-        .clk(clk),
-        .reset(reset)
+// Clock generation
+always #5 clk = ~clk;
 
-    );
+initial begin
 
-    // ============================
-    // Clock Generation
-    // ============================
-    initial begin
-        clk = 0;
-        forever #5 clk = ~clk;
-    end
+    clk = 0;
+    rst = 1;
 
-    // ============================
-    // Test Sequence
-    // ============================
-    initial begin
+    #10;
+    rst = 0;
 
-        // Apply Reset
-        reset = 1;
+    // Let the CPU execute a few instructions
+    repeat (5) @(posedge clk);
 
-        #20;
+    $display("-------------------------------------------");
+    $display("CPU Execute Stage Test");
+    $display("-------------------------------------------");
 
-        reset = 0;
+    $display("PC              = %0d", dut.pc);
+    $display("Instruction     = 0x%08h", dut.instruction);
 
-        // Let CPU execute a few cycles
-        repeat (5) @(posedge clk);
+    $display("");
 
-        // Display CPU State
-        $display("---------------------------------------");
-        $display("CPU Integration Test");
-        $display("---------------------------------------");
-        $display("PC          = %0d", dut.pc);
-        $display("Instruction = 0x%08h", dut.instruction);
-        $display("RegWrite    = %0b", dut.reg_write);
-        $display("MemRead     = %0b", dut.mem_read);
-        $display("MemWrite    = %0b", dut.mem_write);
-        $display("Branch      = %0b", dut.branch);
-        $display("Jump        = %0b", dut.jump);
-        $display("ALUSrc      = %0b", dut.alu_src);
-        $display("ResultSrc   = %0d", dut.result_src);
-        $display("ALUOp       = %0d", dut.alu_op);
-        $display("---------------------------------------");
+    $display("Register Read 1 = %0d", dut.rd1);
+    $display("Register Read 2 = %0d", dut.rd2);
 
-        $display("PASS: CPU Fetch + Decode");
+    $display("Immediate       = %0d", dut.immediate);
 
-        $finish;
+    $display("");
 
-    end
+    $display("ALU Control     = %b", dut.alu_control_signal);
+    $display("Operand B       = %0d", dut.operand_b);
+
+    $display("");
+
+    $display("ALU Result      = %0d", dut.alu_result);
+
+    $display("-------------------------------------------");
+
+    $finish;
+
+end
 
 endmodule
