@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 
 module control_unit (
+
     input  logic [6:0] opcode,
 
     output logic RegWrite,
@@ -11,17 +12,18 @@ module control_unit (
     output logic ALUSrc,
     output logic [1:0] ResultSrc,
     output logic [1:0] ALUOp
+
 );
 
 always_comb begin
 
     // Default values
-    RegWrite = 0;
-    MemRead  = 0;
-    MemWrite = 0;
-    Branch   = 0;
-    Jump     = 0;
-    ALUSrc   = 0;
+    RegWrite  = 0;
+    MemRead   = 0;
+    MemWrite  = 0;
+    Branch    = 0;
+    Jump      = 0;
+    ALUSrc    = 0;
     ResultSrc = 2'b00;
     ALUOp     = 2'b00;
 
@@ -73,16 +75,17 @@ always_comb begin
         // LUI
         7'b0110111: begin
             RegWrite = 1;
-            ALUSrc = 1;
+            ALUSrc   = 1;
         end
 
         // AUIPC
         7'b0010111: begin
             RegWrite = 1;
-            ALUSrc = 1;
+            ALUSrc   = 1;
         end
 
         default: begin
+            // Keep default values
         end
 
     endcase
