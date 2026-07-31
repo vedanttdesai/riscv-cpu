@@ -170,9 +170,14 @@ module cpu_top (
     // Next PC Logic
     //=========================================================
 
+    logic [31:0] jalr_target;
+
+    assign jalr_target = alu_result & 32'hFFFFFFFE;
+
     assign next_pc =
-        (jump)        ? branch_target :
-        (take_branch) ? branch_target :
-                        pc_plus4;
+        (jump && instruction[6:0] == 7'b1100111) ? jalr_target :
+        (jump)                                   ? branch_target :
+        (take_branch)                            ? branch_target :
+                                                pc_plus4;
 
 endmodule

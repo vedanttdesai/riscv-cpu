@@ -72,6 +72,15 @@ always_comb begin
             ResultSrc = 2'b10;
         end
 
+        // JALR
+        7'b1100111: begin
+            Jump      = 1;
+            RegWrite  = 1;
+            ALUSrc    = 1;
+            ResultSrc = 2'b10;
+            ALUOp     = 2'b00;
+        end
+
         // LUI
         7'b0110111: begin
             RegWrite = 1;

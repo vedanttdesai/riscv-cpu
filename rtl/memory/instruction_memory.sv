@@ -11,28 +11,24 @@ integer i;
 
 initial begin
 
-    //=====================================================
-    // JAL Test Program
-    //=====================================================
+    // addi x5, x0, 16
+    memory[0] = 32'h01000293;
 
-    // addi x1, x0, 5
-    memory[0] = 32'h00500093;
-
-    // jal x4, +8
-    // Jump to PC = 12
-    // x4 should receive PC+4 = 8
-    memory[1] = 32'h0080026F;
+    // jalr x1, x5, 0
+    memory[1] = 32'h000280E7;
 
     // addi x2, x0, 99
     // SHOULD BE SKIPPED
     memory[2] = 32'h06300113;
 
-    // addi x3, x0, 42
-    // SHOULD EXECUTE
-    memory[3] = 32'h02A00193;
+    // NOP
+    memory[3] = 32'h00000013;
 
-    // Fill remaining memory with NOPs
-    for (i = 4; i < 256; i = i + 1)
+    // Target (PC = 16)
+    // addi x3, x0, 42
+    memory[4] = 32'h02A00193;
+
+    for (i = 5; i < 256; i = i + 1)
         memory[i] = 32'h00000013;
 
 end
