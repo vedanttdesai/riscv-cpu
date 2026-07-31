@@ -14,6 +14,7 @@ module cpu_top (
     logic [31:0] branch_target;
 
     assign branch_target = pc + immediate;
+    assign pc_plus4 = pc + 32'd4;
 
     program_counter pc_inst (
         .clk(clk),
@@ -68,13 +69,28 @@ module cpu_top (
     logic [31:0] alu_result;
     logic [31:0] memory_read_data;
     logic [31:0] write_back_data;
+    logic [31:0] pc_plus4;
 
     logic zero;
     logic take_branch;
 
-    assign write_back_data =
-        (result_src == 2'b01) ? memory_read_data :
-                                alu_result;
+    always_comb begin
+         case (result_src)
+
+            2'b00:
+                write_back_data = alu_result;
+
+            2'b01:
+                write_back_data = memory_read_data;
+
+            2'b10:
+                write_back_data = pc_plus4;
+
+            default:
+                write_back_data = 32'd0;
+
+        endcase
+    end
 
     register_file rf (
         .clk(clk),
@@ -154,7 +170,9 @@ module cpu_top (
     // Next PC Logic
     //=========================================================
 
-    assign next_pc = (take_branch) ? branch_target
-                                   : (pc + 32'd4);
+    assign next_pc =
+        (jump)        ? branch_target :
+        (take_branch) ? branch_target :
+                        pc_plus4;
 
 endmodule
