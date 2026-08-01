@@ -164,7 +164,20 @@ module cpu_top (
     // Branch Logic
     //=========================================================
 
-    assign take_branch = branch && zero;
+    logic branch_taken;
+
+    always_comb begin
+        case (instruction[14:12])
+
+            3'b000: branch_taken =  zero;   // BEQ
+            3'b001: branch_taken = !zero;   // BNE
+
+            default: branch_taken = 1'b0;
+
+        endcase
+    end
+
+assign take_branch = branch && branch_taken;
 
     //=========================================================
     // Next PC Logic
