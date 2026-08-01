@@ -1,12 +1,11 @@
 `timescale 1ns/1ps
 
 module instruction_memory (
-    input  logic [31:0] address,
+    input logic [31:0] address,
     output logic [31:0] instruction
 );
 
 logic [31:0] memory [0:255];
-
 integer i;
 
 initial begin
@@ -17,15 +16,13 @@ initial begin
     // addi x2, x0, 10
     memory[1] = 32'h00A00113;
 
-    // blt x1, x2, +8
-    memory[2] = 32'h0020C463;
+    // bltu x1, x2, +8
+    memory[2] = 32'h0020E463;
 
-    // addi x3, x0, 99
-    // SHOULD BE SKIPPED
+    // addi x3, x0, 99 (should be skipped)
     memory[3] = 32'h06300193;
 
     // addi x3, x0, 42
-    // SHOULD EXECUTE
     memory[4] = 32'h02A00193;
 
     for (i = 5; i < 256; i = i + 1)

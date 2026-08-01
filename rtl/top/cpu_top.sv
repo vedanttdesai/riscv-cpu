@@ -169,9 +169,11 @@ module cpu_top (
     always_comb begin
         case (instruction[14:12])
 
-            3'b000: branch_taken =  zero;                         // BEQ
-            3'b001: branch_taken = !zero;                         // BNE
-            3'b100: branch_taken = ($signed(rd1) < $signed(rd2)); // BLT
+            3'b000: branch_taken =  zero;                          // BEQ
+            3'b001: branch_taken = !zero;                          // BNE
+            3'b100: branch_taken = ($signed(rd1) <  $signed(rd2)); // BLT
+            3'b101: branch_taken = ($signed(rd1) >= $signed(rd2)); // BGE
+            3'b110: branch_taken = (rd1 < rd2);                    // BLTU
 
             default: branch_taken = 1'b0;
 
