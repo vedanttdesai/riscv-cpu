@@ -174,6 +174,7 @@ module cpu_top (
             3'b100: branch_taken = ($signed(rd1) <  $signed(rd2)); // BLT
             3'b101: branch_taken = ($signed(rd1) >= $signed(rd2)); // BGE
             3'b110: branch_taken = (rd1 < rd2);                    // BLTU
+            3'b111: branch_taken = (rd1 >= rd2);                   // BGEU
 
             default: branch_taken = 1'b0;
 

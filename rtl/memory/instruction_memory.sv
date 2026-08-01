@@ -10,14 +10,14 @@ integer i;
 
 initial begin
 
-    // addi x1, x0, 5
-    memory[0] = 32'h00500093;
+    // addi x1, x0, 10
+    memory[0] = 32'h00A00093;
 
-    // addi x2, x0, 10
-    memory[1] = 32'h00A00113;
+    // addi x2, x0, 5
+    memory[1] = 32'h00500113;
 
-    // bltu x1, x2, +8
-    memory[2] = 32'h0020E463;
+    // bgeu x1, x2, +8
+    memory[2] = 32'h0020F463;
 
     // addi x3, x0, 99 (should be skipped)
     memory[3] = 32'h06300193;
