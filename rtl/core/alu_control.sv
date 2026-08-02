@@ -45,6 +45,9 @@ always_comb begin
                 3'b100:
                     ALUControl = 4'b0100;   // XOR / XORI
                 
+                3'b011:
+                    ALUControl = 4'b1001;   // SLTU / SLTIU
+                
                 3'b010:
                     ALUControl = 4'b1000;   // SLT / SLTI
                 
