@@ -37,6 +37,9 @@ always_comb begin
 
                 3'b100:
                     ALUControl = 4'b0100;   // XOR / XORI
+                
+                3'b001:
+                    ALUControl = 4'b0101;   // SLL
 
                 default:
                     ALUControl = 4'b0000;
