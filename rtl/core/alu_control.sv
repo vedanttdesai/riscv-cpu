@@ -34,6 +34,13 @@ always_comb begin
 
                 3'b110:
                     ALUControl = 4'b0011;   // OR / ORI
+                
+                3'b101: begin
+                    if (funct7 == 7'b0100000)
+                        ALUControl = 4'b0111;   // SRA
+                    else
+                        ALUControl = 4'b0110;   // SRL
+                end
 
                 3'b100:
                     ALUControl = 4'b0100;   // XOR / XORI
