@@ -30,10 +30,13 @@ always_comb begin
                 end
 
                 3'b111:
-                    ALUControl = 4'b0010;       // AND
+                    ALUControl = 4'b0010;   // AND / ANDI
 
                 3'b110:
-                    ALUControl = 4'b0011;       // OR
+                    ALUControl = 4'b0011;   // OR / ORI
+
+                3'b100:
+                    ALUControl = 4'b0100;   // XOR / XORI
 
                 default:
                     ALUControl = 4'b0000;
