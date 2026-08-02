@@ -16,8 +16,8 @@ initial begin
     // addi x2, x0, 10
     memory[1] = 32'h00A00113;
 
-    // or x3, x1, x2
-    memory[2] = 32'h0020E1B3;
+    // and x3, x1, x2
+    memory[2] = 32'h0020F1B3;
 
     for (i = 3; i < 256; i = i + 1)
         memory[i] = 32'h00000013;
