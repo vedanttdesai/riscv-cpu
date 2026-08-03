@@ -10,17 +10,14 @@ integer i;
 
 initial begin
 
-    // auipc x1, 0x12345
-    memory[0] = 32'h12345097;
+    // addi x1, x0, 0
+    memory[0] = 32'h00000093;
 
-    // nop
-    memory[1] = 32'h00000013;
+    // lw x2, 0(x1)
+    memory[1] = 32'h0000A103;
 
     // nop
     memory[2] = 32'h00000013;
-
-    for (i = 3; i < 256; i = i + 1)
-        memory[i] = 32'h00000013;
 
 end
 

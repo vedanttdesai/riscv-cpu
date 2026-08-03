@@ -17,9 +17,15 @@ module data_memory (
     integer i;
 
     // Initialize memory to zero
+    // Initialize memory
     initial begin
+
         for (i = 0; i < 256; i = i + 1)
             memory[i] = 32'd0;
+
+        // Test value for LW
+        memory[0] = 32'd1234;
+
     end
 
     // Synchronous write
