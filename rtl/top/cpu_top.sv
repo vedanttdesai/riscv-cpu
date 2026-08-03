@@ -16,6 +16,7 @@ module cpu_top (
     assign branch_target = pc + immediate;
     assign pc_plus4 = pc + 32'd4;
     assign lui_data = immediate;
+    assign auipc_data = pc + immediate;
 
     program_counter pc_inst (
         .clk(clk),
@@ -72,6 +73,7 @@ module cpu_top (
     logic [31:0] write_back_data;
     logic [31:0] pc_plus4;
     logic [31:0] lui_data;
+    logic [31:0] auipc_data;
 
     logic zero;
     logic take_branch;
@@ -89,7 +91,8 @@ module cpu_top (
                 write_back_data = pc_plus4;
 
             2'b11:
-                write_back_data = lui_data;
+                write_back_data = (instruction[6:0] == 7'b0110111) ?
+                                    lui_data : auipc_data;
 
             default:
                 write_back_data = 32'd0;

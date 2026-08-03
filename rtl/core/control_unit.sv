@@ -89,8 +89,10 @@ always_comb begin
 
         // AUIPC
         7'b0010111: begin
-            RegWrite = 1;
-            ALUSrc   = 1;
+            RegWrite  = 1;
+            ALUSrc    = 1;
+            ALUOp      = 2'b00;
+            ResultSrc = 2'b11;
         end
 
         default: begin

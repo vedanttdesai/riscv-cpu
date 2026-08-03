@@ -10,8 +10,8 @@ integer i;
 
 initial begin
 
-    // lui x1, 0x12345
-    memory[0] = 32'h123450B7;
+    // auipc x1, 0x12345
+    memory[0] = 32'h12345097;
 
     // nop
     memory[1] = 32'h00000013;
