@@ -83,8 +83,8 @@ always_comb begin
 
         // LUI
         7'b0110111: begin
-            RegWrite = 1;
-            ALUSrc   = 1;
+            RegWrite  = 1;
+            ResultSrc = 2'b11;
         end
 
         // AUIPC
