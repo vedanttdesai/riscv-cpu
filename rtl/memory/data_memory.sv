@@ -24,7 +24,7 @@ module data_memory (
             memory[i] = 32'd0;
 
         // Test value for LW
-        memory[0] = 32'd1234;
+        memory[0] = 32'h12345678;
 
     end
 
@@ -35,11 +35,27 @@ module data_memory (
     end
 
     // Asynchronous read
+    logic [31:0] word;
+    logic [7:0] byte_data;
+
     always_comb begin
+
+        word = memory[address[9:2]];
+
+        case (address[1:0])
+
+            2'b00: byte_data = word[7:0];
+            2'b01: byte_data = word[15:8];
+            2'b10: byte_data = word[23:16];
+            2'b11: byte_data = word[31:24];
+
+        endcase
+
         if (mem_read)
-            read_data = memory[address[9:2]];
+            read_data = {{24{byte_data[7]}}, byte_data};   // LB
         else
             read_data = 32'd0;
+
     end
 
 endmodule
