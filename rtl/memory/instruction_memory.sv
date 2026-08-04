@@ -13,8 +13,8 @@ initial begin
     // addi x1, x0, 0
     memory[0] = 32'h00000093;
 
-    // lh x2, 0(x1)
-    memory[1] = 32'h00009103;
+    // lhu x2, 0(x1)
+    memory[1] = 32'h0000D103;
 
     // nop
     memory[2] = 32'h00000013;

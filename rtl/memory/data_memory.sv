@@ -26,6 +26,7 @@ module data_memory (
 
         // Test value for LW
         memory[0] = 32'h12345678;
+        memory[0] = 32'h1234F678;
 
     end
 
@@ -75,6 +76,9 @@ module data_memory (
 
                 3'b100: // LBU
                     read_data = {24'd0, byte_data};
+                
+                3'b101: // LHU
+                    read_data = {16'd0, halfword_data};
 
                 default: // LW (temporary)
                     read_data = word;
