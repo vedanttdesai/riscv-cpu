@@ -7,6 +7,7 @@ module data_memory (
     input  logic        mem_write,
     input  logic [31:0] address,
     input  logic [31:0] write_data,
+    input logic [2:0] funct3,
     output logic [31:0] read_data
 
 );
@@ -24,7 +25,7 @@ module data_memory (
             memory[i] = 32'd0;
 
         // Test value for LW
-        memory[0] = 32'h12345678;
+        memory[0] = 32'h123456F8;
 
     end
 
@@ -51,8 +52,22 @@ module data_memory (
 
         endcase
 
-        if (mem_read)
-            read_data = {{24{byte_data[7]}}, byte_data};   // LB
+        if (mem_read) begin
+
+            case (funct3)
+
+                3'b000: // LB
+                    read_data = {{24{byte_data[7]}}, byte_data};
+
+                3'b100: // LBU
+                    read_data = {24'd0, byte_data};
+
+                default:
+                    read_data = 32'd0;
+
+            endcase
+
+        end
         else
             read_data = 32'd0;
 

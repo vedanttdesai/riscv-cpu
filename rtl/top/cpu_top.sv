@@ -165,6 +165,7 @@ module cpu_top (
         .mem_write(mem_write),
         .address(alu_result),
         .write_data(rd2),
+        .funct3(instruction[14:12]),
         .read_data(memory_read_data)
     );
 
