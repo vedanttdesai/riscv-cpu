@@ -25,7 +25,7 @@ module data_memory (
             memory[i] = 32'd0;
 
         // Test value for LW
-        memory[0] = 32'h123456F8;
+        memory[0] = 32'h12345678;
 
     end
 
@@ -38,6 +38,7 @@ module data_memory (
     // Asynchronous read
     logic [31:0] word;
     logic [7:0] byte_data;
+    logic [15:0] halfword_data;
 
     always_comb begin
 
@@ -52,6 +53,16 @@ module data_memory (
 
         endcase
 
+        case (address[1])
+
+            1'b0:
+                halfword_data = word[15:0];
+
+            1'b1:
+                halfword_data = word[31:16];
+
+        endcase
+
         if (mem_read) begin
 
             case (funct3)
@@ -59,11 +70,14 @@ module data_memory (
                 3'b000: // LB
                     read_data = {{24{byte_data[7]}}, byte_data};
 
+                3'b001: // LH
+                    read_data = {{16{halfword_data[15]}}, halfword_data};
+
                 3'b100: // LBU
                     read_data = {24'd0, byte_data};
 
-                default:
-                    read_data = 32'd0;
+                default: // LW (temporary)
+                    read_data = word;
 
             endcase
 
