@@ -1,5 +1,9 @@
-# Verilator build output
+# Verilator build artifacts
 obj_dir/
 V*
+verilated*
 *.o
 *.d
+*.a
+*.mk
+*.dat

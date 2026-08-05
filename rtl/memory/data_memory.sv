@@ -26,14 +26,46 @@ module data_memory (
 
         // Test value for LW
         memory[0] = 32'h12345678;
-        memory[0] = 32'h1234F678;
 
     end
 
     // Synchronous write
     always_ff @(posedge clk) begin
-        if (mem_write)
-            memory[address[9:2]] <= write_data;
+
+        if (mem_write) begin
+
+            case (funct3)
+
+                // SB
+                3'b000: begin
+                    case (address[1:0])
+                        2'b00: memory[address[9:2]][7:0]   <= write_data[7:0];
+                        2'b01: memory[address[9:2]][15:8]  <= write_data[7:0];
+                        2'b10: memory[address[9:2]][23:16] <= write_data[7:0];
+                        2'b11: memory[address[9:2]][31:24] <= write_data[7:0];
+                    endcase
+                end
+
+                // SH
+                3'b001: begin
+                    case (address[1])
+                        1'b0: memory[address[9:2]][15:0]  <= write_data[15:0];
+                        1'b1: memory[address[9:2]][31:16] <= write_data[15:0];
+                    endcase
+                end
+
+                // SW
+                3'b010:
+                    memory[address[9:2]] <= write_data;
+
+                default: begin
+                    // Do nothing
+                end
+
+            endcase
+
+        end
+
     end
 
     // Asynchronous read
