@@ -10,20 +10,20 @@ integer i;
 
 initial begin
 
-    // addi x1, x0, 0
-    memory[0] = 32'h00000093;
+    // addi x1, x0, 10
+    memory[0] = 32'h00A00093;
 
-    // lui x2, 0xABCD1
-    memory[1] = 32'hABCD1137;
+    // addi x2, x0, 20
+    memory[1] = 32'h01400113;
 
-    // sh x2, 0(x1)
-    memory[2] = 32'h00209023;
-
-    // lw x3, 0(x1)
-    memory[3] = 32'h0000A183;
+    // add x3, x1, x2
+    memory[2] = 32'h002081B3;
 
     // nop
-    memory[4] = 32'h00000013;
+    memory[3] = 32'h00000013;
+
+    for (i = 4; i < 256; i = i + 1)
+        memory[i] = 32'h00000013;
 
 end
 
