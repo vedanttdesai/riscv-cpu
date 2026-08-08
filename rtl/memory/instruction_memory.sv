@@ -10,14 +10,14 @@ integer i;
 
 initial begin
 
-    // addi x1, x0, 12
-    memory[0] = 32'h00C00093;
+    // addi x1, x0, 3
+    memory[0] = 32'h00300093;
 
-    // addi x2, x0, 10
-    memory[1] = 32'h00A00113;
+    // addi x2, x0, 2
+    memory[1] = 32'h00200113;
 
-    // xor x3, x1, x2
-    memory[2] = 32'h0020C1B3;
+    // sll x3, x1, x2
+    memory[2] = 32'h002091B3;
 
     // nop
     memory[3] = 32'h00000013;
