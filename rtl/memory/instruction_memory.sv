@@ -10,11 +10,11 @@ integer i;
 
 initial begin
 
-    // addi x1, x0, -5
-    memory[0] = 32'hFFB00093;
+    // addi x1, x0, -1
+    memory[0] = 32'hFFF00093;
 
-    // slti x2, x1, -3
-    memory[1] = 32'hFFD0A113;
+    // sltiu x2, x1, 1
+    memory[1] = 32'h0010B113;
 
     // nop
     memory[2] = 32'h00000013;
