@@ -13,11 +13,11 @@ initial begin
     // addi x1, x0, 0
     memory[0] = 32'h00000093;
 
-    // addi x2, x0, 127
-    memory[1] = 32'h07F00113;
+    // lui x2, 0xABCDE
+    memory[1] = 32'hABCDE137;
 
-    // sb x2, 0(x1)
-    memory[2] = 32'h00208023;
+    // sw x2, 0(x1)
+    memory[2] = 32'h0020A023;
 
     // lw x3, 0(x1)
     memory[3] = 32'h0000A183;
