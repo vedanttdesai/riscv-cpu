@@ -13,11 +13,11 @@ initial begin
     // addi x1, x0, 10
     memory[0] = 32'h00A00093;
 
-    // addi x2, x0, 10
-    memory[1] = 32'h00A00113;
+    // addi x2, x0, 20
+    memory[1] = 32'h01400113;
 
-    // beq x1, x2, +8
-    memory[2] = 32'h00208463;
+    // bne x1, x2, +8
+    memory[2] = 32'h00209463;
 
     // This instruction should be skipped
     // addi x3, x0, 99
