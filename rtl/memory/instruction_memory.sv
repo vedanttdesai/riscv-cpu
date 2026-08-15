@@ -5,22 +5,21 @@ module instruction_memory (
     output logic [31:0] instruction
 );
 
-logic [31:0] memory [0:255];
-integer i;
+    logic [31:0] memory [0:255];
 
-initial begin
+    integer i;
 
-    // auipc x1, 0x12345
-    memory[0] = 32'h12345097;
+    initial begin
 
-    // nop
-    memory[1] = 32'h00000013;
+        // Clear instruction memory
+        for (i = 0; i < 256; i = i + 1)
+            memory[i] = 32'h00000013;  // NOP
 
-    for (i = 2; i < 256; i = i + 1)
-        memory[i] = 32'h00000013;
+        // Load test program
+        $readmemh("tests/program.hex", memory);
 
-end
+    end
 
-assign instruction = memory[address[9:2]];
+    assign instruction = memory[address[9:2]];
 
 endmodule
