@@ -1,0 +1,14 @@
+## Verification Status
+
+The RV32I CPU currently has all 29 implemented instructions individually verified.
+
+- Arithmetic: 3/3
+- Logical: 3/3
+- Shift: 3/3
+- Comparison: 4/4
+- Memory: 8/8
+- Branch: 6/6
+- Jump: 2/2
+- Upper Immediate: 2/2
+
+Total: 29/29 verified
