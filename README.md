@@ -11,4 +11,4 @@ The RV32I CPU currently has all 29 implemented instructions individually verifie
 - Jump: 2/2
 - Upper Immediate: 2/2
 
-Total: 29/29 verified
+Total: 29/29 verified both during and after building 
