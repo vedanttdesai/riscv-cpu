@@ -12,3 +12,9 @@ The RV32I CPU currently has all 29 implemented instructions individually verifie
 - Upper Immediate: 2/2
 
 Total: 29/29 verified both during and after building 
+
+## Current Verification
+
+All 29 RV32I instructions have been individually tested using Verilator.
+
+The CPU is currently implemented as a single-cycle RV32I processor.
