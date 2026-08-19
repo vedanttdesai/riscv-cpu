@@ -18,3 +18,23 @@ Total: 29/29 verified both during and after building
 All 29 RV32I instructions have been individually tested using Verilator.
 
 The CPU is currently implemented as a single-cycle RV32I processor.
+
+# RV32I CPU Verification Status
+
+The CPU has been individually verified for all 29 implemented RV32I instructions.
+
+Status: 29/29 verified
+
+Verification tool:
+
+- Verilator 5.050
+
+Architecture:
+
+- RV32I
+
+- 32-bit
+
+- Single-cycle CPU
+
+EOF
